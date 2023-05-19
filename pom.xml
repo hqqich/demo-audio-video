@@ -5,13 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>demo-video</artifactId>
+  <artifactId>demo-audio-video</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>cam</module>
     <module>audio</module>
     <module>cam-cv</module>
+    <module>cam-opencv</module>
   </modules>
 
   <name>demo-video</name>
