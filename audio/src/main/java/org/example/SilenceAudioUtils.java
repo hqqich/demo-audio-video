@@ -26,8 +26,7 @@ public class SilenceAudioUtils {
    * @param format  Number of bits per sample (16 here)
    * @throws IOException
    */
-  public static byte[] buildWavHeader(int dataLength, int srate, int channel, int format)
-      throws IOException {
+  public static byte[] buildWavHeader(int dataLength, int srate, int channel, int format) throws IOException {
     byte[] header = new byte[44];
 
     long totalDataLen = dataLength + 36;
@@ -119,11 +118,34 @@ public class SilenceAudioUtils {
    */
   public static void makeSilenceWav(String filePath, Long duration) {
     List<Byte> oldBytes = new ArrayList<>();
-    IntStream.range(0, (int) (duration * 32)).forEach(x -> oldBytes.add((byte) 0));
+    IntStream.range(0, (int) (duration * 32)).forEach(x -> oldBytes.add((byte) 100));
+    writeToFile(filePath, Bytes.toArray(oldBytes));
+  }
+  /**
+   * 生成静音音频
+   *
+   * @param filePath 输出文件地址
+   * @param duration 音频时长
+   */
+  public static void makeSilenceWavD(String filePath, Long duration) {
+    List<Byte> oldBytes = new ArrayList<>();
+    //IntStream.range(0, (int) (duration * 32)).forEach(x -> oldBytes.add((byte) 100));
+
+    byte[] buf = new byte[1];
+    for (int i = 0; i < 1000 * (float) 44100 / 1000; i++) {
+      double angle = i / ((float) 44100 / 440) * 2.0 * Math.PI;
+      double v = Math.sin(angle) * 100;
+      System.out.println(v);
+      buf[0] = (byte) (v);
+      oldBytes.add((byte) (v));
+    }
     writeToFile(filePath, Bytes.toArray(oldBytes));
   }
 
   public static void main(String[] args) {
-    makeSilenceWav("./1.wav", 5000L);
+    //makeSilenceWav("./2.wav", 5000L);
+    makeSilenceWavD("./3.wav", 5000L);
+
+
   }
 }
